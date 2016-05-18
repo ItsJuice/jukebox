@@ -1,1 +1,5 @@
-index.html.eex
+
+Hello <%= @current_user %>
+
+<a href="/auth/logout">Logout</a>
+
