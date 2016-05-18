@@ -1,5 +1,6 @@
 defmodule Juicebox.Router do
   use Juicebox.Web, :router
+  require Ueberauth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -17,6 +18,14 @@ defmodule Juicebox.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+  end
+
+  scope "/auth", Juicebox do
+    pipe_through :browser
+
+    get "/logout", AuthController, :delete
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.

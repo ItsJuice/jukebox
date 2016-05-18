@@ -18,8 +18,13 @@ defmodule Juicebox.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Juicebox, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+     applications: [:phoenix, 
+                    :phoenix_html, 
+                    :cowboy, 
+                    :logger,
+                    :phoenix_ecto, 
+                    :postgrex,
+                    :ueberauth_facebook]]
   end
 
   # Specifies which paths to compile per environment.
@@ -35,7 +40,8 @@ defmodule Juicebox.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:ueberauth_facebook, "~> 0.3"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
