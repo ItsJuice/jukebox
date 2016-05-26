@@ -1,4 +1,4 @@
-# Juicebox
+  # Juicebox
 
 First install Elixir:
 
@@ -34,3 +34,13 @@ heroku buildpacks:add heroku/heroku-buildpack-elixir
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
 
+## Troubleshooting
+
+If you run into trouble with
+```
+$ mix ecto.create
+```
+run the commands
+  1. ```CREATE ROLE postgres LOGIN CREATEDB;```
+  2. ```ALTER ROLE postgres LOGIN;```
+  3. ```ALTER ROLE postgres CREATEDB;```
