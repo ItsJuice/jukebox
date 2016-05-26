@@ -36,7 +36,7 @@ class App extends Component {
 
     this.channel.on("video.added", payload => {
       let videos = JSON.parse(JSON.stringify(this.state.videos));
-      videos.push(payload.video_id);
+      videos.push(payload);
 
       this.setState({
         videos: videos

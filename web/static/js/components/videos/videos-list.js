@@ -8,7 +8,7 @@ class VideoList extends Component {
     return (
       <div className="video-list">
         <h2>Videos</h2>
-        {videos.map((videoId, index) => <Video key={index} videoId={videoId} />)}
+        {videos.map((video, index) => <Video key={index} video={video} />)}
       </div>
     );
   }
