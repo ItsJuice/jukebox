@@ -13,17 +13,17 @@ defmodule Video do
     query = from v in Video,
             where: v.video_id == ^video.video_id
 
-    video = Juicebox.Repo.one(query)
+    v = Juicebox.Repo.one(query)
 
-    if !video  do
+    if !v  do
       Juicebox.Repo.insert %Video{video_id: video.video_id}
-      video = Juicebox.Repo.one(query)
+      v = Juicebox.Repo.one(query)
     end
 
-    video
+    v
   end
 
-  def increment_queued_count_changeset(video) do
+  def increment_queued_count_changeset(%Video{} = video) do
     video
     |> cast(%{queued_count: (video.queued_count+1)}, ~w(queued_count), ~w())
   end
