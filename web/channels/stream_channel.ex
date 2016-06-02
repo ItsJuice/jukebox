@@ -1,6 +1,8 @@
 defmodule Juicebox.StreamChannel do
   use Phoenix.Channel
 
+  intercept ["video.added"]
+
   def join("stream:" <> stream_id, _params, socket) do
     {:ok, socket}
   end
@@ -8,7 +10,8 @@ defmodule Juicebox.StreamChannel do
   def handle_in("video.added", %{"video_id" => video_id}, socket) do
     IO.puts "video.added: #{video_id}"
 
-    video = Video.find_or_create( %{video_id: video_id} )
+    video = VideoServices.find_or_create( %{video_id: video_id} )
+
     changeset = Video.increment_queued_count_changeset(video)
 
     case Juicebox.Repo.update(changeset) do
