@@ -1,4 +1,4 @@
-defmodule Video do
+defmodule Juicebox.Video do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -8,7 +8,7 @@ defmodule Video do
     timestamps
   end
 
-  def increment_queued_count_changeset(%Video{} = video) do
+  def increment_queued_count_changeset(%Juicebox.Video{} = video) do
     video
     |> cast(%{queued_count: (video.queued_count+1)}, ~w(queued_count), ~w())
   end

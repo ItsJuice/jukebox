@@ -1,7 +1,8 @@
-defmodule VideoServices do
+defmodule Juicebox.VideoServices do
   import Ecto.Query
 
   alias Juicebox.Repo
+  alias Juicebox.Video
 
   def find_or_create(%{video_id: video_id} = video) do
     case Repo.get_by(Video, %{video_id: video_id}) do

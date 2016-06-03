@@ -1,6 +1,10 @@
 defmodule Juicebox.StreamChannel do
   use Phoenix.Channel
 
+  alias Juicebox.Repo
+  alias Juicebox.Video
+  alias Juicebox.VideoServices
+
   intercept ["video.added"]
 
   def join("stream:" <> stream_id, _params, socket) do
@@ -14,7 +18,7 @@ defmodule Juicebox.StreamChannel do
 
     changeset = Video.increment_queued_count_changeset(video)
 
-    case Juicebox.Repo.update(changeset) do
+    case Repo.update(changeset) do
       {:ok, video} ->
         broadcast! socket, "video.added", %{ video_id: video.video_id, queued_count: video.queued_count }
       {:error, changeset} ->
