@@ -1,3 +1,5 @@
+Application.ensure_all_started(:hound)
+
 ExUnit.start
 
 Mix.Task.run "ecto.create", ["--quiet"]

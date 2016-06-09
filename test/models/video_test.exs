@@ -1,5 +1,5 @@
-defmodule Juicebox.ErrorViewTest do
-  use Juicebox.ConnCase, async: true
+defmodule Juicebox.VideoTests do
+  use Juicebox.ModelCase, async: true
 
   test "increment_queued_count_changeset increments the video queued count by 1" do
     subject = 
