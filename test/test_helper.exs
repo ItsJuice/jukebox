@@ -1,5 +1,5 @@
-Application.ensure_all_started(:hound)
-
+{:ok, _} = Application.ensure_all_started(:hound)
+ExUnit.configure formatters: [JUnitFormatter, ExUnit.CLIFormatter]
 ExUnit.start
 
 Mix.Task.run "ecto.create", ["--quiet"]

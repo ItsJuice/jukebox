@@ -38,7 +38,8 @@ defmodule Juicebox.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:cowboy, "~> 1.0"},
       {:ex_machina, "~> 0.6.1", only: :test},
-      {:hound, "~> 1.0", only: :test}
+      {:hound, "~> 1.0", only: :test},
+      {:junit_formatter, "~> 0.1", only: :test}
     ]
   end
 
