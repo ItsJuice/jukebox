@@ -18,4 +18,4 @@ config :juicebox, Juicebox.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
-config :hound, driver: "phantomjs", host: "http://localhost", port: 4001
+config :hound, driver: "phantomjs", host: "http://localhost", app_port: 4001
