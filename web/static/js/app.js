@@ -1,9 +1,11 @@
+import 'react-bootstrap';
 import './app.scss';
 
 import React, { Component } from 'react';
 import socket from './sockets/stream';
 
 import VideoList from './components/videos/videos-list';
+import SearchBar from './containers/search-bar';
 
 const VIDEO_SAMPLES = [
   'fd02pGJx0s0',
@@ -53,6 +55,7 @@ class App extends Component {
 
     return (
       <div className="app">
+        <SearchBar />
         <a href="#add-video" onClick={this._onVideoAdded.bind(this)}>Add video</a>
 
         <VideoList videos={videos} />
