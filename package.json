@@ -11,17 +11,26 @@
     "babel-runtime": "^6.0.14",
     "css-loader": "~0.22.0",
     "file-loader": "^0.8.5",
+    "history": "^1.17.0",
     "node-sass": "^3.4.1",
     "phoenixjs": "^1.0.5",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
+    "react-router": "^2.0.0",
     "react-redux": "^4.0.0",
     "redux": "^3.0.4",
-    "redux-devtools": "^2.1.5",
+    "redux-logger": "^2.6.1",
+    "redux-router": "^2.0.0",
+    "redux-thunk": "^2.1.0",
     "sass-loader": "^3.1.1",
     "style-loader": "~0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "~1.12.3"
+  },
+  "devDependencies": {
+    "redux-devtools": "^3.0.0",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.0.11"
   },
   "engines": {
     "node": "5.10.0",
