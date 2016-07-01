@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import socket from './sockets/stream';
 
 import VideoList from './components/videos/videos-list';
-import SearchBar from './containers/search-bar';
+import SearchBar from './components/search-bar/search-bar';
 
 const VIDEO_SAMPLES = [
   'fd02pGJx0s0',
