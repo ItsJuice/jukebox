@@ -4,6 +4,7 @@ elixir:
 env:
   - WEBDRIVER=phantomjs
 before_script:
+  - npm install --development
   - bash $TRAVIS_BUILD_DIR/test/tools/start_webdriver.sh
 script:
   - mix test
