@@ -3,22 +3,24 @@ import { defaults, omit, forEach } from 'lodash';
 
 const defaultOptions = {};
 
-export default function createSocket(opts = {}) {
-  let socket;
-  let channel;
+function createChannel(options) {
+  const socket = new Socket(options.socketURL);
+  socket.connect();
+  channel = socket.channel(options.channelName, {});
+  channel.join()
+    .receive('ok', resp => { console.log('Joined successfully', resp) })
+    .receive('error', resp => { console.log('Unable to join', resp) });
+  return channel;
+}
+
+export function createSocket(opts = {}) {
   const options = defaults(opts, defaultOptions);
 
-  return store => {
-    socket = new Socket(options.socketURL);
-    socket.connect();
-    channel = socket.channel(options.channelName, {});
-    channel.join()
-      .receive('ok', resp => { console.log('Joined successfully', resp) })
-      .receive('error', resp => { console.log('Unable to join', resp) });
-
+  return ( { dispatch } ) => {
+    const channel = createChannel(options);
     forEach(opts.actions, (action, eventName) => {
       channel.on(eventName, payload => {
-        store.dispatch(action(payload));
+        dispatch(action(payload));
       });
     });
 

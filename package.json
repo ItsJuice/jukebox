@@ -28,15 +28,23 @@
     "webpack": "~1.12.3"
   },
   "devDependencies": {
+    "babel-plugin-rewire": "^1.0.0-rc-5",
+    "babel-register": "^6.11.6",
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
     "redux-devtools": "^3.0.0",
     "redux-devtools-dock-monitor": "^1.1.1",
-    "redux-devtools-log-monitor": "^1.0.11"
+    "redux-devtools-log-monitor": "^1.0.11",
+    "redux-mock-store": "^1.1.2",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0"
   },
   "engines": {
     "node": "5.10.0",
     "npm": "3.8.3"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/webpack -p"
+    "postinstall": "./node_modules/.bin/webpack -p",
+    "test": "mocha --compilers js:babel-register test/static/js/**/*.js"
   }
 }
