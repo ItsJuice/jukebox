@@ -6,7 +6,7 @@ const defaultOptions = {};
 function createChannel(options) {
   const socket = new Socket(options.socketURL);
   socket.connect();
-  channel = socket.channel(options.channelName, {});
+  const channel = socket.channel(options.channelName, {});
   channel.join()
     .receive('ok', resp => { console.log('Joined successfully', resp) })
     .receive('error', resp => { console.log('Unable to join', resp) });
