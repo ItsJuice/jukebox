@@ -1,4 +1,8 @@
 {
   'presets': ['es2015', 'react'],
-  'plugins': ['rewire']
+  'env': {
+    'test': {
+      'plugins': ['rewire']
+    }
+  }
 }
