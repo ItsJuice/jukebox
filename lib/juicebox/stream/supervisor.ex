@@ -9,6 +9,10 @@ defmodule Juicebox.Stream.Supervisor do
     Supervisor.start_child(:stream_supervisor, [stream_id])
   end
 
+  def streams do
+    Supervisor.which_children(:stream_supervisor)
+  end
+
   def init(_) do
     children = [
       worker(Juicebox.Stream.Server, [])
