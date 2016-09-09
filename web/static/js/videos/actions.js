@@ -1,5 +1,5 @@
 const ADD_VIDEO = 'ADD_VIDEO';
-const VIDEO_ADDED = 'VIDEO_ADDED';
+const QUEUE_UPDATED = 'QUEUE_UPDATED';
 
 const VIDEO_SAMPLES = [
   'fd02pGJx0s0',
@@ -19,24 +19,26 @@ function addVideo() {
   return {
     type: ADD_VIDEO,
     socketData: {
-      event: 'video.added',
+      event: 'video.added:main',
       payload: {
-        video_id: sampleVideo()
+        video_id: sampleVideo(), // pending: proper value from youtube
+        duration: 30  // pending: proper value from youtube
       }
     }
   }
 }
 
-function videoAdded(video) {
+function queueUpdated(videos) {
+  console.log('Queue updated');
   return {
-    type: VIDEO_ADDED,
-    video: video
+    type: QUEUE_UPDATED,
+    videos: videos.queue
   }
 }
 
 export {
   ADD_VIDEO,
-  VIDEO_ADDED,
+  QUEUE_UPDATED,
   addVideo,
-  videoAdded
+  queueUpdated,
 };
