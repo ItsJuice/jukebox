@@ -4,7 +4,7 @@ defmodule Juicebox.StreamChannel do
   alias Phoenix.PubSub
   alias Juicebox.Stream.Server, as: Stream
 
-  intercept ["video.added"]
+  intercept ["queue.updated"]
 
   def join("stream:" <> stream_id, _params, socket) do
     Juicebox.Stream.Supervisor.start_stream("main")
