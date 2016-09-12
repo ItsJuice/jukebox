@@ -3,6 +3,7 @@ defmodule Juicebox.Stream.Supervisor do
 
   def start_link do
     Supervisor.start_link(__MODULE__, [], name: :stream_supervisor)
+    start_stream("main")
   end
 
   def start_stream(stream_id) do

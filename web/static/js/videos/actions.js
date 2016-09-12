@@ -1,4 +1,5 @@
 const ADD_VIDEO = 'ADD_VIDEO';
+const LOAD_STATE = 'ADD_VIDEO';
 const QUEUE_UPDATED = 'QUEUE_UPDATED';
 
 const VIDEO_SAMPLES = [
@@ -19,17 +20,31 @@ function addVideo() {
   return {
     type: ADD_VIDEO,
     socketData: {
-      event: 'video.added:main',
+      event: 'video.added',
       payload: {
-        video_id: sampleVideo(), // pending: proper value from youtube
-        duration: 30  // pending: proper value from youtube
+        stream_id: 'main',
+        video: {
+          video_id: sampleVideo(), // pending: proper value from youtube
+          duration: 30000,  // pending: proper value from youtube
+        }
+      }
+    }
+  }
+}
+
+function loadInitialState() {
+  return {
+    type: LOAD_STATE,
+    socketData: {
+      event: 'video.getState',
+      payload: {
+        stream_id: 'main',
       }
     }
   }
 }
 
 function queueUpdated(videos) {
-  console.log('Queue updated');
   return {
     type: QUEUE_UPDATED,
     videos: videos.queue
@@ -41,4 +56,5 @@ export {
   QUEUE_UPDATED,
   addVideo,
   queueUpdated,
+  loadInitialState,
 };
