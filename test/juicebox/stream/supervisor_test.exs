@@ -10,10 +10,10 @@ defmodule Juicebox.Stream.SupervisorTests do
   end
 
   describe ".streams" do
-    test "auto-starts playback", ctx do
+    test "returns the default stream, plus any others being added", ctx do
       {:ok, _} = Supervisor.start_stream(ctx.stream_1_id)
       {:ok, _} = Supervisor.start_stream(ctx.stream_2_id)
-      assert length(Supervisor.streams) == 2
+      assert length(Supervisor.streams) == 3
     end
   end
 end
