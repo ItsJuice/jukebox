@@ -7,11 +7,11 @@ defmodule Juicebox.Stream.Server do
   alias Juicebox.Stream.Control
 
   def start_link(stream_id) do
-    GenServer.start_link(__MODULE__, %{}, name: via_tuple(stream_id))
+    GenServer.start_link(__MODULE__, stream_id, name: via_tuple(stream_id))
   end
 
-  def init(_) do
-    {:ok, %{playing: nil, timer: nil, queue: [], history: []}}
+  def init(stream_id) do
+    {:ok, %{playing: nil, timer: nil, queue: [], history: [], id: stream_id}}
   end
 
   @doc """
@@ -70,6 +70,16 @@ defmodule Juicebox.Stream.Server do
     GenServer.call(via_tuple(stream_id), :history)
   end
 
+  @doc """
+  Returns the stream id
+  """
+  def id(pid) when is_pid(pid) do
+    GenServer.call(pid, :id)
+  end
+
+  def id(_), do: {:error, "Must be called with a pid"}
+
+
   defp start(stream_id) do
     GenServer.call(via_tuple(stream_id), :start)
   end
@@ -103,6 +113,10 @@ defmodule Juicebox.Stream.Server do
 
   def handle_call(:history, _from, %{history: history} = state) do
     {:reply, {:ok, history}, state}
+  end
+
+  def handle_call(:id, _from, %{id: id} = state) do
+    {:reply, {:ok, id}, state}
   end
 
   def handle_cast({:vote, track_id}, state) do
