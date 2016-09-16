@@ -4,8 +4,8 @@ defmodule Juicebox.Stream.SupervisorTests do
 
   setup do
     [
-      stream_1_id: 'stream1',
-      stream_2_id: 'stream2'
+      stream_1_id: "stream1",
+      stream_2_id: "stream2"
     ]
   end
 
@@ -13,7 +13,8 @@ defmodule Juicebox.Stream.SupervisorTests do
     test "returns the default stream, plus any others being added", ctx do
       {:ok, _} = Supervisor.start_stream(ctx.stream_1_id)
       {:ok, _} = Supervisor.start_stream(ctx.stream_2_id)
-      assert length(Supervisor.streams) == 3
+
+      assert Supervisor.streams |> Enum.sort == ["main", "stream1", "stream2"]
     end
   end
 end
