@@ -13,9 +13,10 @@ defmodule Juicebox.StreamChannel do
   end
 
   def handle_in("video.added", %{"stream_id" => stream_id, "video" => video} = _, socket) do
-    IO.puts "video.added: #{inspect video}"
+    {:ok, state} = Stream.add(stream_id, %{ video: (for {key, val} <- video, into: %{}, do: { String.to_atom(key), val}) } )
 
-    Stream.add(stream_id, %{ video: (for {key, val} <- video, into: %{}, do: { String.to_atom(key), val}) } )
+    IO.puts "Done"
+    IO.puts inspect state
     
     {:noreply, socket}
   end

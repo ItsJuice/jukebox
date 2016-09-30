@@ -26,7 +26,6 @@ defmodule Juicebox.Stream.Server do
   queue.
   """
   def add(stream_id, track) do
-    IO.puts "added: #{inspect @video}"
     {:ok, _} = GenServer.call(via_tuple(stream_id), {:add, track})
 
     {:ok, new_queue} = queue(stream_id)
@@ -96,7 +95,9 @@ defmodule Juicebox.Stream.Server do
   end
 
   def handle_call({:add, track}, _from, state) do
+    IO.puts "adding #{inspect track}"
     new_state = Control.add_track(state, track)
+    IO.puts "adding #{inspect new_state}"
     {:reply, {:ok, new_state}, new_state}
   end
 
