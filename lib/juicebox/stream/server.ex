@@ -77,15 +77,20 @@ defmodule Juicebox.Stream.Server do
   ####
 
   def handle_call(:start, _from, state) do
+    IO.puts "start #{inspect state} #{inspect self}"
+
     new_state = Control.start(state)
     {:reply, {:ok, new_state}, new_state}
   end
 
   def handle_call(:remaining_time, _from, state) do
+    IO.puts "remaining_time #{inspect state} #{inspect self}"
     {:reply, Control.remaining_time(state), state}
   end
 
   def handle_call(:playing, _from, state) do
+    IO.puts "playing #{inspect state} #{inspect self}"
+
     {:reply, {:ok, state.playing}, state}
   end
 
@@ -95,9 +100,8 @@ defmodule Juicebox.Stream.Server do
   end
 
   def handle_call({:add, track}, _from, state) do
-    IO.puts "adding #{inspect track}"
     new_state = Control.add_track(state, track)
-    IO.puts "adding #{inspect new_state}"
+    IO.puts "adding #{inspect new_state} #{inspect self()}"
     {:reply, {:ok, new_state}, new_state}
   end
 
@@ -113,6 +117,8 @@ defmodule Juicebox.Stream.Server do
 
 
   def handle_info(:next, state) do
+    IO.puts "next #{inspect state} #{inspect self}"
+
     {:noreply, Control.play_next(state)}
   end
 

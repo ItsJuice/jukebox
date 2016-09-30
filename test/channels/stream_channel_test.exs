@@ -10,7 +10,7 @@ defmodule Juicebox.StreamChannelTest do
 
   setup do
     {:ok, _, socket} =
-      subscribe_and_join(socket, StreamChannel, "stream:main")
+      subscribe_and_join(socket, StreamChannel, "stream:" <> @stream_id)
     {:ok, socket: socket}
   end
 
