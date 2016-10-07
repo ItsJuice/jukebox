@@ -129,7 +129,6 @@ defmodule Juicebox.Stream.Server do
     {:noreply, Control.vote(state, track_id)}
   end
 
-
   def handle_info(:next, state) do
     IO.puts "next #{inspect state} #{inspect self}"
 
