@@ -4,6 +4,8 @@ defmodule Juicebox.Stream.ServerTests do
   alias Juicebox.Stream.Track
   alias Juicebox.Youtube.Video
 
+  import Mock
+
   @stream "test"
 
   defp create_track(track_id, attrs \\ %{}) do
@@ -40,6 +42,19 @@ defmodule Juicebox.Stream.ServerTests do
 
       {:ok, state} = Stream.add(@stream, ctx.track_3)
       assert state.queue == [ctx.track_2, ctx.track_3]
+    end
+
+    test "broadcasts add to PubSub", ctx do
+      with_mock Phoenix.PubSub, [broadcast: fn(_, _, _) -> {:ok,[]} end] do
+        {:ok, _} = Stream.add(@stream, ctx.track_1)
+        assert called(
+          Phoenix.PubSub.broadcast(
+            Juicebox.PubSub,
+            "juicebox:stream:server:" <> @stream,
+            %{ action: 'update_queue', new_queue: [ctx.track_1] }
+          )
+        )
+      end
     end
   end
 

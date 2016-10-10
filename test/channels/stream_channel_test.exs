@@ -1,8 +1,9 @@
 defmodule Juicebox.StreamChannelTest do
   use Juicebox.ChannelCase
 
+  import Mock
+
   alias Juicebox.StreamChannel
-  alias Juicebox.Stream.Server
 
   @stream_id "main"
   @video %{id: "2222", duration: 30000}
@@ -15,9 +16,9 @@ defmodule Juicebox.StreamChannelTest do
   end
 
   test "adding a video", %{socket: socket} do
-    push(socket, "video.added", @payload)
-    :timer.sleep(5000);
-    {:ok, state} = Server.playing(@stream_id)
-    assert state == %{video: @video}
+    with_mock Juicebox.Stream.Server, [add: fn(_stream_id, _track) -> {:ok, []} end] do
+      push(socket, "video.added", @payload)
+      assert called Juicebox.Stream.Server.add(@stream_id, %{video: @video})
+    end
   end
 end
