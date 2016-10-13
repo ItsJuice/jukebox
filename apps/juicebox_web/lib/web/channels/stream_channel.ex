@@ -8,6 +8,7 @@ defmodule JuiceboxWeb.StreamChannel do
 
   def join("stream:" <> stream_id, _params, socket) do
     PubSub.subscribe(JuiceboxStream.PubSub, "juicebox:stream:server:" <> stream_id)
+    IO.inspect JuiceboxStream.Stream.Supervisor.start_stream(stream_id)
     {:ok, queue} = Stream.queue(stream_id)
     {:ok, %{ queue: queue }, socket}
   end

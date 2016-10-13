@@ -5,11 +5,12 @@ import { addVideo } from './actions';
 
 function _onVideoAdded(e) {
   e.preventDefault();
-  this.props.addVideo();
+  this.props.addVideo({ streamId: this.props.params.streamId });
 }
 
 class VideoList extends Component {
   render() {
+    const { params: { streamId } } = this.props;
     const videos = this.props.videos;
 
     return (
