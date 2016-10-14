@@ -39,12 +39,13 @@ defmodule Juicebox.Mixfile do
       {:phoenix_html, "~> 2.6"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:cowboy, "~> 1.0"},
+      {:httpoison, "~> 0.8.0"},
+      {:gettext, "~> 0.9"},
+      {:gproc, "~> 0.5.0"},
       {:ex_machina, "~> 1.0", only: :test},
       {:hound, "~> 1.0", only: :test},
       {:junit_formatter, "~> 0.1", only: :test},
-      {:httpoison, "~> 0.8.0"},
-      {:gettext, "~> 0.9"},
-      {:gproc, "~> 0.5.0"}
+      {:mock, "~> 0.1.1", only: :test}
     ]
   end
 

@@ -1,8 +1,10 @@
 defmodule Juicebox.StreamChannelTest do
   use Juicebox.ChannelCase
 
+  import Mock
+
   alias Juicebox.StreamChannel
-  alias Juicebox.Stream.Server
+  alias Phoenix.PubSub
 
   @stream_id "main"
   @video %{id: "2222", duration: 30000}
@@ -15,9 +17,21 @@ defmodule Juicebox.StreamChannelTest do
   end
 
   test "adding a video", %{socket: socket} do
-    push(socket, "video.added", @payload)
-    :timer.sleep(5000);
-    {:ok, state} = Server.playing(@stream_id)
-    assert state == %{video: @video}
+    with_mock Juicebox.Stream.Server, [add: fn(_stream_id, _track) -> {:ok, []} end] do
+      push(socket, "video.added", @payload)
+      assert called Juicebox.Stream.Server.add(@stream_id, %{video: @video})
+    end
+  end
+
+  test "when a video is added, it is broadcast on all the channels", %{socket: socket} do
+    PubSub.broadcast(Juicebox.PubSub, 
+      "juicebox:stream:server:" <> @stream_id, 
+      %{ action: 'update_queue', new_queue: [] } 
+    )
+    assert_receive %Phoenix.Socket.Broadcast{
+      topic: "stream:" <> @stream_id,
+      event: "queue.updated",
+      payload: %{queue: []}
+    }
   end
 end
