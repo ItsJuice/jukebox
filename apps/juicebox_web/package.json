@@ -1,5 +1,5 @@
 {
-  "name": "juicebox",
+  "name": "juicebox_web",
   "version": "0.0.1",
   "dependencies": {
     "babel-core": "~6.1.2",

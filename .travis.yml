@@ -8,9 +8,8 @@ before_install:
   - nvm install 6.3.1
   - npm install -g yarn
 before_script:
-  - mix deps.get
-  - cd apps/juicebox_web && yarn install
+  - npm install
   - bash $TRAVIS_BUILD_DIR/test/tools/start_webdriver.sh
 script:
   - mix test
-  - cd apps/juicebox_web && npm test
+  - npm test
