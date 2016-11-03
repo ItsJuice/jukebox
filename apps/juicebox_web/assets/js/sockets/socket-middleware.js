@@ -1,53 +1,50 @@
 import { Socket } from 'phoenixjs';
 import { defaults, omit, forEach } from 'lodash';
+import { CONNECT_TO_CHANNEL } from '../sockets/actions';
 
-const defaultOptions = {};
+const socket = (function() {
+  let socket;
 
-function createChannel(dispatch, options, channelName) {
-  const socket = new Socket(options.socketURL);
-  socket.connect();
-  const channel = socket.channel(channelName, {});
+  return function() {
+    if (!socket) {
+      socket = new Socket('/stream');
+      socket.connect();
+    }
+
+    return socket;
+  }
+}());
+
+function connect(streamId) {
+  const topic = `stream:${streamId}`;
+  const channel = socket().channel(topic);
+
   channel.join()
-    .receive('ok', resp => { 
-      console.log('Joined successfully', channelName, resp);
-      if (options.connectAction) {
-        dispatch(options.connectAction(resp));
-      }
+    .receive('ok', resp => {
+      console.log('Joined successfully', streamId, resp);
     })
     .receive('error', resp => { console.log('Unable to join', resp) });
+
   return channel;
 }
 
-export function createSocket(opts = {}) {
-  const options = defaults(opts, defaultOptions);
-
+function createSocket() {
   return ( { dispatch } ) => {
-    let channel = joinStream(options.channelName);
-
-    function joinStream(streamId) {
-      const channel = createChannel(dispatch, options, streamId);
-
-      forEach(opts.actions, (action, eventName) => {
-        channel.on(eventName, payload => {
-          dispatch(action(payload));
-        });
-      });
-
-      return channel;
-    }
+    let channel;
 
     return next => action => {
       const { socketData } = action;
 
-      if (socketData) {
-        const streamId = `stream:${socketData.payload.stream_id}`;
-        if (channel.topic !== streamId) {
-          channel.socket.disconnect();
-          channel = joinStream(streamId);
-        }
-
-        channel.push(socketData.event, socketData.payload);
-        action = omit(action, 'socketData');
+      switch(action.type) {
+        case CONNECT_TO_CHANNEL:
+          channel && channel.leave();
+          channel = connect(action.channel);
+          channel.on('remote.action', action => dispatch(action));
+        default:
+          if (socketData) {
+            channel && channel.push(socketData.event, socketData.payload);
+            action = omit(action, 'socketData');
+          }
       }
 
       return next(action);

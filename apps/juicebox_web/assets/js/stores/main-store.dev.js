@@ -8,19 +8,13 @@ import createLogger from 'redux-logger';
 import createSocket from '../sockets/socket-middleware';
 import rootReducer from './reducers';
 import { loadInitialState, queueUpdated } from '../videos/actions';
+import { connectToChannel } from '../sockets/actions';
 
 const finalCreateStore = compose(
   applyMiddleware(
     thunk
   ),
-  applyMiddleware(createSocket({
-    socketURL: '/stream',
-    channelName: 'stream:main',
-    connectAction: queueUpdated,
-    actions: {
-      'queue.updated': queueUpdated
-    }
-  })),
+  applyMiddleware(createSocket()),
   reduxReactRouter({
     routes,
     createHistory
@@ -34,6 +28,15 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState
   );
+
+  let oldStream;
+  store.subscribe(function() {
+    let newStream = store.getState().router.params.streamId;
+    if (newStream !== oldStream) {
+      oldStream = newStream;
+      store.dispatch(connectToChannel(newStream));
+    }
+  });
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
