@@ -5,10 +5,9 @@ import createHistory from 'history/lib/createBrowserHistory';
 import routes from '../routes';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import createSocket from '../sockets/socket-middleware';
+import { createSocket, connectToChannel, subscribeToStream } from '../sockets';
 import rootReducer from './reducers';
 import { loadInitialState, queueUpdated } from '../videos/actions';
-import { connectToChannel } from '../sockets/actions';
 
 const finalCreateStore = compose(
   applyMiddleware(
@@ -29,14 +28,7 @@ export default function configureStore(initialState) {
     initialState
   );
 
-  let oldStream;
-  store.subscribe(function() {
-    let newStream = store.getState().router.params.streamId;
-    if (newStream !== oldStream) {
-      oldStream = newStream;
-      store.dispatch(connectToChannel(newStream));
-    }
-  });
+  subscribeToStream({action: connectToChannel, store});
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
