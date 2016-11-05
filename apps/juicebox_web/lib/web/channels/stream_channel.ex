@@ -13,27 +13,19 @@ defmodule JuiceboxWeb.StreamChannel do
 
     send(self, {:after_join, stream_id})
 
-    {:ok, %{ queue: queue }, socket}
+    {:ok, socket}
   end
 
   def handle_in("video.added", %{"stream_id" => stream_id, "video" => video} = _, socket) do
     {:ok, state} = Stream.add(stream_id, %{ video: (for {key, val} <- video, into: %{}, do: { String.to_atom(key), val}) } )
-    
-    {:noreply, socket}
-  end
-
-  def handle_out("queue.updated", payload, socket) do
-    IO.inspect "Queue updated"
-
-    push socket, "remote.action", %{ payload | type: "QUEUE_UPDATED" }
 
     {:noreply, socket}
   end
 
-  def handle_info(%{ action: 'update_queue', new_queue: new_queue }, socket) do
-    IO.inspect "Got 'video.added' with #{inspect new_queue}"
+  def handle_info(%{ type: _ } = event, socket) do
+    IO.inspect "Got #{inspect event}"
 
-    broadcast! socket, "remote.action", %{ type: "QUEUE_UPDATED", videos: new_queue }
+    broadcast! socket, "remote.action", event
 
     {:noreply, socket}
   end
