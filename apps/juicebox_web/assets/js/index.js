@@ -10,9 +10,9 @@ const initialState = {
 const appInit = () => {
   const store = configureStore({});
 
-  const rootElement = document.createElement('div');
+  const rootElement = document.getElementById('main');
   document.body.appendChild(rootElement);
-  
+
   render(<Root store={store} />, rootElement);
 };
 

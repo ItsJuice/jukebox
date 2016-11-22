@@ -1,6 +1,7 @@
 const ADD_VIDEO = 'ADD_VIDEO';
 const LOAD_STATE = 'ADD_VIDEO';
 const QUEUE_UPDATED = 'QUEUE_UPDATED';
+const PLAYING_CHANGED = 'PLAYING_CHANGED';
 
 const VIDEO_SAMPLES = [
   'fd02pGJx0s0',
@@ -16,13 +17,13 @@ function sampleVideo() {
   return VIDEO_SAMPLES[Math.floor(Math.random() * VIDEO_SAMPLES.length)];
 }
 
-function addVideo() {
+function addVideo({ streamId }) {
   return {
     type: ADD_VIDEO,
     socketData: {
       event: 'video.added',
       payload: {
-        stream_id: 'main',
+        stream_id: streamId,
         video: {
           video_id: sampleVideo(), // pending: proper value from youtube
           duration: 30000,  // pending: proper value from youtube
@@ -54,6 +55,7 @@ function queueUpdated(videos) {
 export {
   ADD_VIDEO,
   QUEUE_UPDATED,
+  PLAYING_CHANGED,
   addVideo,
   queueUpdated,
   loadInitialState,
