@@ -1,11 +1,10 @@
 import { QUEUE_UPDATED } from './actions';
-import { SEARCH } from './actions';
+import { RECEIVE_TERM } from './actions';
 import { cloneDeep } from 'lodash';
 
 function videos(state = [], action = {}) {
   switch (action.type) {
-    case SEARCH:
-      // Call API..
+    case RECEIVE_TERM:
       return state;
     case QUEUE_UPDATED:
       return cloneDeep(action.videos);

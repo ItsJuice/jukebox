@@ -1,7 +1,7 @@
 const ADD_VIDEO = 'ADD_VIDEO';
 const LOAD_STATE = 'ADD_VIDEO';
 const QUEUE_UPDATED = 'QUEUE_UPDATED';
-const SEARCH = 'SEARCH';
+const RECEIVE_TERM = 'RECEIVE_TERM';
 
 const VIDEO_SAMPLES = [
   'fd02pGJx0s0',
@@ -17,9 +17,9 @@ function sampleVideo() {
   return VIDEO_SAMPLES[Math.floor(Math.random() * VIDEO_SAMPLES.length)];
 }
 
-function search({ term }) {
+function receiveTerm({ term }) {
   return {
-    type: SEARCH,
+    type: RECEIVE_TERM,
     payload: term,
   };
 }
@@ -62,8 +62,8 @@ function queueUpdated(videos) {
 export {
   ADD_VIDEO,
   QUEUE_UPDATED,
-  SEARCH,
-  search,
+  RECEIVE_TERM,
+  receiveTerm,
   addVideo,
   queueUpdated,
   loadInitialState,
