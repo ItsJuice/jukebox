@@ -13,6 +13,8 @@ const VIDEO_SAMPLES = [
   'gzC29VwE1A',
 ];
 
+const ENVIRONMENT = 'development';
+
 function sampleVideo() {
   return VIDEO_SAMPLES[Math.floor(Math.random() * VIDEO_SAMPLES.length)];
 }
@@ -25,9 +27,16 @@ function receiveResults(results) {
 }
 
 function receiveTerm({ term }) {
-  console.log('term', term);
+  let url;
+
+  if (ENVIRONMENT == 'development') {
+    url = 'http://localhost:4000/';
+  } else {
+    url = 'http://juiceboxapp-staging.herokuapp.com';
+  }
+
   return dispatch => {
-    fetch(`http://juiceboxapp-staging.herokuapp.com/api/videos?q=${term}`, {
+    fetch(`${url}/api/videos?q=${term}`, {
       method: 'get',
       mode: 'cors',
       headers: new Headers({
@@ -35,10 +44,10 @@ function receiveTerm({ term }) {
         'Content-Type': 'multipart/form-data',
       }),
     }).then(function(response) {
-      console.log('success', response);
+      console.log('success --> ', response);
       dispatch(receiveResults(response));
     }).catch(function(error) {
-      console.log('error', error);
+      console.log('error --> ', error);
     });
   };
 }

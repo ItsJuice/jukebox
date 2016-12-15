@@ -2,7 +2,8 @@ defmodule JuiceboxWeb.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :juicebox_web,
+    [:corsica,
+     app: :juicebox_web,
      version: "0.0.1",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -32,6 +33,8 @@ defmodule JuiceboxWeb.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:plug, "~> 1.0"},
+      {:corsica, "~> 0.5"},
       {:phoenix, "~> 1.2.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.0-rc"},
