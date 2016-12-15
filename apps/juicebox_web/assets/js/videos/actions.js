@@ -25,9 +25,15 @@ function receiveResults(results) {
 }
 
 function receiveTerm({ term }) {
+  console.log('term', term);
   return dispatch => {
     fetch(`http://juiceboxapp-staging.herokuapp.com/api/videos?q=${term}`, {
-      method: 'get'
+      method: 'get',
+      mode: 'cors',
+      headers: new Headers({
+        'Access-Control-Origin': '*',
+        'Content-Type': 'multipart/form-data',
+      }),
     }).then(function(response) {
       console.log('success', response);
       dispatch(receiveResults(response));
