@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { reduxReactRouter } from 'redux-router';
 import DevTools from '../containers/dev-tools';
-import createHistory from 'history/lib/createBrowserHistory';
+import { createHistory } from 'history';
 import routes from '../routes';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
@@ -44,4 +44,4 @@ export default function configureStore(initialState) {
   }
 
   return store;
-};
+}
