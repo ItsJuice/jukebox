@@ -1,13 +1,13 @@
 import React from 'react';
 import { Router, Route } from 'react-router';
-import AppContent from './containers/app-content';
-import VideoPage from './videos/video-page';
+import { Container } from './container';
+import { VideoPage } from './videos';
 
 function AppRouter( { history } ) {
   return  <Router history={ history }>
-            <Route path="/" component={AppContent}>
-              <Route path="stream/:streamId" component={VideoPage} />
-            </Route>
+            <Container>
+              <Route path="/stream/:streamId" component={ VideoPage } />
+            </Container>
           </Router>
 }
 

@@ -38,7 +38,9 @@ module.exports = {
       filename: './js/vendor.bundle.js'
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      __DEV__: process.env.NODE_ENV !== 'production',
+      __ROOTPATH__: JSON.stringify(process.env.ROOT_PATH || '/'),
     })
   ],
 
