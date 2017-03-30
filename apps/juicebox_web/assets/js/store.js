@@ -4,23 +4,20 @@ import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import history from './utils/browser-history';
 
-let enhancedCreateStore;
+function devMiddleware(middleware, args = []) {
+  if (__DEV__) {
+    return middleware.apply(this, args);
+  }
 
-if (__DEV__) {
-  enhancedCreateStore = compose(
-    applyMiddleware(
-      thunk,
-      routerMiddleware(history),
-      createLogger()
-    )
-  )(originalCreateStore);
-} else {
-  enhancedCreateStore = compose(
-    applyMiddleware(
-      thunk,
-      routerMiddleware(history)
-    )
-  )(originalCreateStore);
+  return () => (next) => (action) => next(action);
 }
+
+const enhancedCreateStore = compose(
+  applyMiddleware(
+    thunk,
+    routerMiddleware(history),
+    devMiddleware(createLogger)
+  )
+)(originalCreateStore);
 
 export default enhancedCreateStore;
