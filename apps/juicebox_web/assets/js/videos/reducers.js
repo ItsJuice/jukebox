@@ -21,7 +21,7 @@ function videos(state = initialState, action) {
     case PLAYING_CHANGED:
       return Object.assign({}, state,
         {
-          playing: action.playing.video,
+          playing: action.playing && action.playing.video,
           playingStartTime: action.time || 0,
           playingUpdated: (new Date()).getTime()
         });

@@ -13,7 +13,8 @@ class Video extends Component {
                 height="157"
                 src={`https://www.youtube.com/embed/${this.props.video.video_id}?autoplay=1&start=${this.props.playingStartTime}`}
                 frameBorder="0"
-                allowFullScreen></iframe>
+                allowFullScreen
+                key="youtube"></iframe>
            </div>;
   }
 
