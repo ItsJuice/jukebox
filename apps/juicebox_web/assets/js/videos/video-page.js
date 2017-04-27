@@ -17,9 +17,12 @@ class VideoPage extends Component {
       queue,
       streamId,
       toggleExpanded,
+      votes,
       voteDown,
       voteUp,
     } = this.props;
+
+    console.log('votes', votes);
 
     return (
       <div className={ styles['video-page'] }>
@@ -36,6 +39,7 @@ class VideoPage extends Component {
           <VideoList addVideo={ addVideo }
                      streamId={ streamId }
                      videos={ queue }
+                     votes={ votes }
                      voteDown={ voteDown }
                      voteUp={ voteUp }
           />
@@ -54,6 +58,7 @@ VideoPage.propTypes = {
   playingStartTime: PropTypes.number,
   expanded: PropTypes.bool,
   toggleExpanded: PropTypes.func,
+  votes: PropTypes.object,
   voteDown: PropTypes.func,
   voteUp: PropTypes.func,
 };

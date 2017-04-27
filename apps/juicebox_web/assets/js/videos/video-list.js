@@ -3,7 +3,7 @@ import VideoPlaceholder from './video-placeholder';
 
 class VideoList extends Component {
   render() {
-    const { streamId, videos, voteDown, voteUp } = this.props;
+    const { streamId, videos, votes, voteDown, voteUp } = this.props;
     return (
       <div className="video-list">
         <h2>Up next</h2>
@@ -11,6 +11,7 @@ class VideoList extends Component {
           <VideoPlaceholder key={ index }
                             streamId={ streamId }
                             video={ video }
+                            vote={ votes[video.video_id] }
                             voteDown={ voteDown }
                             voteUp={ voteUp } />
         ))}
@@ -22,6 +23,7 @@ class VideoList extends Component {
 VideoList.propTypes = {
   streamId: PropTypes.string.isRequired,
   videos: PropTypes.array,
+  votes: PropTypes.object,
   voteDown: PropTypes.func,
   voteUp: PropTypes.func,
 }

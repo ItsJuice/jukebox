@@ -12,13 +12,17 @@ class VideoPlaceholder extends Component {
   }
 
   onVoteDown() {
+    if (this.props.vote === false) { return; }
+
     this.props.voteDown({
       streamId: this.props.streamId,
-      videoId: this.props.video.id,
+      videoId: this.props.video.video_id,
     });
   }
 
   onVoteUp() {
+    if (this.props.vote === true) { return; }
+
     this.props.voteUp({
       streamId: this.props.streamId,
       videoId: this.props.video.video_id,
@@ -42,6 +46,7 @@ class VideoPlaceholder extends Component {
 
 VideoPlaceholder.propTypes = {
   streamId: PropTypes.string.isRequired,
+  vote: PropTypes.bool,
   voteDown: PropTypes.func,
   voteUp: PropTypes.func,
   video: PropTypes.object,

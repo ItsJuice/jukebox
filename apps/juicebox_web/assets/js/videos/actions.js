@@ -22,6 +22,7 @@ function addVideo({ streamId, video }) {
 function voteDown({ streamId, videoId }) {
   return {
     type: VOTED_DOWN,
+    videoId,
     socketData: {
       event: 'video.vote_down',
       payload: {
@@ -35,6 +36,7 @@ function voteDown({ streamId, videoId }) {
 function voteUp({ streamId, videoId }) {
   return {
     type: VOTED_UP,
+    videoId,
     socketData: {
       event: 'video.vote_up',
       payload: {
@@ -63,6 +65,8 @@ export {
   QUEUE_UPDATED,
   PLAYING_CHANGED,
   TOGGLE_EXPANDED,
+  VOTED_DOWN,
+  VOTED_UP,
   addVideo,
   queueUpdated,
   toggleExpanded,

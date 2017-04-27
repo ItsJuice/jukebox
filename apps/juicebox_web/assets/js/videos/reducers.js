@@ -4,11 +4,25 @@ import {
   RECEIVE_TERM,
   RECEIVE_RESULTS,
   TOGGLE_EXPANDED,
+  VOTED_DOWN,
+  VOTED_UP,
 } from './actions';
 
 const initialState = {
-  expanded: true
+  expanded: true,
+  votes: {}
 };
+
+function vote(state, videoId, direction) {
+  let { votes } = state;
+
+  const vote = votes[videoId];
+  if (vote !== direction) {
+    votes = Object.assign({}, votes, { [videoId]: direction });
+  }
+
+  return Object.assign({}, state, { votes });
+}
 
 function videos(state = initialState, action) {
   switch (action.type) {
@@ -27,6 +41,10 @@ function videos(state = initialState, action) {
         });
     case TOGGLE_EXPANDED:
       return Object.assign({}, state, { expanded: !state.expanded });
+    case VOTED_DOWN:
+      return vote(state, action.videoId, false);
+    case VOTED_UP:
+      return vote(state, action.videoId, true);
     default:
       return state;
   }
