@@ -13,8 +13,7 @@ defmodule JuiceboxStream.Stream.ServerTests do
 
   defp create_track(track_id, attrs \\ %{}) do
     %Track{
-      track_id: track_id,
-      video: Map.merge(%Video{title: "Video", duration: 30}, attrs)
+      video: Map.merge(%Video{title: "Video", duration: 30, video_id: track_id}, attrs)
     }
   end
 
@@ -228,9 +227,9 @@ defmodule JuiceboxStream.Stream.ServerTests do
 
       assert Stream.playing(@stream) == {:ok, ctx.track}
 
-      Stream.vote(@stream, 2)
-      Stream.vote(@stream, 2)
-      Stream.vote(@stream, 1)
+      Stream.vote_up(@stream, 2)
+      Stream.vote_up(@stream, 2)
+      Stream.vote_up(@stream, 1)
 
       sleep_until_next_track()
       assert Stream.playing(@stream) == {:ok, %{ctx.track_2 | votes: 2}}

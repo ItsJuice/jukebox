@@ -22,6 +22,7 @@ defmodule JuiceboxStream.Stream.Control do
   end
 
   def add_track(%{queue: queue} = state, track) do
+    # TODO: use Track struct
     track_with_votes = Map.merge(track, %{votes: 0})
     new_queue = queue ++ [track_with_votes]
     %{state | queue: new_queue}
