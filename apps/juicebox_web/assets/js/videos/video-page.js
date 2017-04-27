@@ -22,14 +22,13 @@ class VideoPage extends Component {
     } = this.props;
 
     return (
-      <div key="video-page" className={ styles['video-page'] }>
+      <div className={ styles['video-page'] }>
         <Search streamId={ streamId } />
-        <div key="main-col" className={ styles['main-column'] }>
+        <div className={ styles['main-column'] }>
           <Video video={ playing }
                  playingStartTime={ playingStartTime }
                  expanded={ expanded }
                  toggleExpanded={ toggleExpanded }
-                 key="video-wrapper"
           />
           <Reactions streamId={ streamId } />
         </div>
