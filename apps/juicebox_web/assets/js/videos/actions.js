@@ -61,7 +61,6 @@ function toggleExpanded() {
 }
 
 function skipPlaying({ streamId }) {
-  console.log(streamId);
   return {
     type: SKIP_PLAYING,
     socketData: {
