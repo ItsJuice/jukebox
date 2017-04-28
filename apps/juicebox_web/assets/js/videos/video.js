@@ -8,7 +8,6 @@ import Boo from './buttons/boo.svg';
 
 class Video extends Component {
   skipPlaying = () => {
-    console.log("props", this.props);
     this.props.skipPlaying({ streamId: this.props.streamId });
   }
 
