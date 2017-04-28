@@ -21,8 +21,6 @@ class VideoPage extends Component {
       voteUp,
     } = this.props;
 
-    console.log('votes', votes);
-
     return (
       <div className={ styles['video-page'] }>
         <Search streamId={ streamId } />
